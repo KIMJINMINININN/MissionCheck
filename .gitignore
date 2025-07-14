@@ -1,0 +1,22 @@
+# 로그 파일 제외
+logs/
+*.log
+
+# 빌드 결과물 제외
+/build/
+*.o
+*.class
+
+# 환경 설정 파일 제외
+.env
+config/local.json
+
+# npm 패키지 디렉터리 제외
+node_modules/
+# idea 파일
+*.xml
+*.iml
+
+package-lock.json
+
+*.gitignore
