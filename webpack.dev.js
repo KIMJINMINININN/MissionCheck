@@ -3,6 +3,13 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const fs = require("fs");
+
+
+const WebpackBar = require("webpackbar");
+const BundleAnalyzerPlugin =
+    require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+
 
 module.exports = merge(common, {
     mode: 'development',
@@ -39,9 +46,26 @@ module.exports = merge(common, {
         plugins: [
             new ReactRefreshWebpackPlugin(), // React Fast Refresh 플러그인 추가
             // ...다른 플러그인(예: HtmlWebpackPlugin)...
+            new WebpackBar({
+                name: "Main",
+                color: "cyan",
+                basic: true,
+                profile: true,
+            }),
+            new BundleAnalyzerPlugin({
+                analyzerMode: "static", // HTML 보고서 생성
+                openAnalyzer: false, // 자동으로 브라우저 오픈 안 함
+                reportFilename: "bundle-report.html",
+            }),
         ],
     },
     output: {
         filename: '[name].js',
+        cache: {
+            type: "filesystem",
+            buildDependencies: {
+                config: [__filename],
+            },
+        },
     },
 });
